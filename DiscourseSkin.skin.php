@@ -54,7 +54,7 @@ class DiscourseSkinTemplate extends BaseTemplate {
 	public function execute() {
 		$this->html( 'headelement' ); ?>
  
-
+<?php $this->html( 'bodytext' ) ?>
  
 <?php $this->printTrail(); ?>
 </body>
