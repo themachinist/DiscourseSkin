@@ -46,6 +46,4 @@ $wgResourceModules['skins.discourse'] = array(
 	'remoteBasePath' => &$GLOBALS['wgStylePath'],
 	'localBasePath' => &$GLOBALS['wgStyleDirectory'],
 );
-
-
 ?>

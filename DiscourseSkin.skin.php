@@ -89,45 +89,47 @@ class DiscourseSkinTemplate extends BaseTemplate {
 							<a href="/"><img alt="Techstore@MASS Precision" src=<?php echo $this->data['logopath'] ?> class="logo-big" id="site-logo"></a>
 						</div>
 						<div class="panel clearfix">
-            				<div class="current-username">
-            					<?php	
-            					/**
-            					 * 	Setup Sign-in/Username section
-            					 */ 
-            					if ($this->isUserLoggedIn()) { ?>
+							<div class="current-username">
+								<?php	
+								/**
+								 * 	Ouput the User's name or a sign in button
+								 */ 
+								if ($this->isUserLoggedIn()) { ?>
 								<span class="username"><a href="<?php echo $this->data['personal_urls']['userpage']['text']; ?>"><?php echo $this->data['personal_urls']['userpage']['text']; ?></a></span>
 								<?php } else { ?>
-								<button class="btn btn-primary"><i class="fa fa-user"></i>Sign In</button>
+									<a class="btn btn-primary" href="<?php echo $this->data['personal_urls']['anonlogin']['href']; ?>"><i class="fa fa-user"></i><?php echo $this->data['personal_urls']['anonlogin']['text']; ?></a>
 								<?php } ?>
-                  			</div>
-                  			<?php	
-        					/**
-        					 * 	Setup Sign-in/Username section
-        					 */ 
-        					if ($this->isUserLoggedIn()) { ?>
-                  			<ul class="icons clearfix" role="navigation">
-                  			<li class="notifications">
-            					<a class="icon" href="#" data-notifications="notifications-dropdown" id="user-notifications" title="notifications of @name mentions, replies to your posts and topics, private messages, etc">
+				  			</div>
+				  			<?php	
+							/**
+							 * 	If the a user is signed in display user controls
+							 */ 
+							if ($this->isUserLoggedIn()) { ?>
+				  			<ul class="icons clearfix" role="navigation">
+				  			<li class="notifications">
+								<a class="icon" href="#" data-notifications="notifications-dropdown" id="user-notifications" title="notifications of @name mentions, replies to your posts and topics, private messages, etc">
 									<i class="fa fa-comment"></i><span class="sr-only">notifications of @name mentions, replies to your posts and topics, private messages, etc</span>
 								</a>
 							</li>
 							<li>
-								<a id="search-button" class="icon expand" href="#" data-dropdown="search-dropdown" title="search for topics, posts, users, or categories">
+								<a id="search-button" class="icon expand" href="#" title="search for topics, posts, users, or categories">
 									<i class="fa fa-search"></i><span class="sr-only">search for topics, posts, users, or categories</span>
 								</a>
 							</li>
 							<li class="categories dropdown">
-								<a class="icon" data-dropdown="site-map-dropdown" data-render="renderSiteMap" href="#" title="go to another topic list or category" id="site-map">
+								<a class="icon" href="#" title="go to another topic list or category" id="site-map">
 									<i class="fa fa-bars"></i><span class="sr-only">go to another topic list or category</span>
 								</a>
 							</li>
 							<li class="current-user dropdown">
-								<a class="icon" data-dropdown="user-dropdown" data-render="renderUserDropdown" href="#" title="Avatar" id="current-user">
+								<a class="icon" href="#" title="Avatar" id="current-user">
 									<i class="fa fa-user"></i><span class="sr-only">go to another topic list or category</span>
 								</a>
 							</li>
 							</ul>
-							<div id="search-dropdown" class="d-dropdown" style="display: none;"><input id="search-term" class="ember-text-field" placeholder="type your search terms here" type="text"></div>
+							<div id="search-dropdown" class="d-dropdown" style="display: none;">
+								<input id="search-term" class="ember-text-field" placeholder="type your search terms here" type="text"><?php echo $this->makeSearchButton( 'fulltext', array( 'id' => 'mw-searchButton', 'class' => 'searchButton' ) ); ?>
+							</div>
 							<section class="d-dropdown" id="notifications-dropdown" style="display: none;">
 								<div class="none">You have no notifications right now.</div>
 							</section>
@@ -140,7 +142,10 @@ class DiscourseSkinTemplate extends BaseTemplate {
 									<li><button class="btn btn-danger right logout"><i class="fa fa-sign-out"></i>Log Out</button></li>
 								</ul>
 							</section>
-							<?php } ?>
+							<?php } 
+							/**
+							 * End user controls
+							 */?>
 						</div>
 	  				</div>
 				</div>
@@ -148,46 +153,76 @@ class DiscourseSkinTemplate extends BaseTemplate {
 			<div id="main-outlet">
 				<div class="container">
   					<div class="row">
-  						<div class="alert alert-info">Create at least 5 public topics and 30 public posts to get discussion started. New users will not be able to earn trust levels unless there's content for them to read.</div>
+  						<div class="alert alert-info"></div>
   					</div>
 				</div>
+				<?php
+				/**
+				 * If the current page is an article let's display our theme controls.
+				 *
+				 * In the case of special pages and core modules markup may be built-in (what the fuck?). I'm about 
+				 * 4 hours in to trying to figure out to replace mediawiki.special.preferences.js, where this built-in
+				 * markup is stored, and it's really not worth the trouble.
+				 */
+				if ( $this->data['isarticle'] ) {
+				?>
 				<div class="list-controls">
 					<div class="container">
-						<ul class="nav nav-pills" id="navigation-bar">
+							<?php
+							foreach ( $this->data['content_navigation'] as $key => $value ) {
+								if ( $key == 'namespaces' ) {
+									echo <<<HTML
+									<ul class="nav-dropdown">
+										<li><a href="#" class="nav-dropdown-item">Page/Talk</a><a href="#" class="nav-dropdown-button"><i class="fa fa-caret-right"></i></a></li>
+										<section>
+											<div class="{$value['main']['class']}"><div><i class="fa fa-group"></i> {$value['main']['text']}</div></a></div>
+											<div class="{$value['talk']['class']}"><a href="{$value['main']['href']}"><div><i class="fa fa-group"></i> {$value['talk']['text']}</div></a></div>
+										</section>
+									<div class="clear"></div>
+									</ul>
+HTML;
+								}
+								echo '<ul class="nav nav-pills" id="navigation-bar">';
+								foreach ( $value as $views ){
+									echo <<<HTML
+									<li class="{$views['class']}" title="{$views['text']}">
+										<a href="{$views['href']}">{$views['text']}</a>
+									</li>
+HTML;
+								}
+								echo '</ul>';
+							}
+							?>
+							<!--
 							<li title="View this article." class="active" >
-								<a href="/latest">Latest</a>
-							</li>
-							<li title="Edit this article.">
-								<a href="/new">New</a>
-							</li>
-							<li title="Watch this article." class="has-icon">
-								<a href="/unread"><span class="unread"></span>Unread</a>
-							</li>
-							<li title="topics you starred" class="has-icon">
-								<a href="/starred"><span class="starred"></span>Starred</a>
-							</li>
-							<li title="a selection of best topics in the last year, month, week or day">
-								<a href="/top">Top</a>
-							</li>
-							<li title="all topics grouped by category">
-								<a href="/categories">Categories</a>
-							</li>
+								<a href="/latest">View</a>
+							</li>-->
 						</ul>
-						<button id="create-topic" class="btn btn-default"><i class="fa fa-plus"></i>Create Topic</button>
 					</div>
 				</div>
+				<?php
+				}
+				?>
 				<div class="container">
 					<div class="contents clearfix body-page">
 						<?php $this->html( 'catlinks' ); ?>
 						<?php $this->html( 'bodytext' ); ?>
+						<?php
+						/*
+						*echo '<pre>';
+						*var_dump( $this->data["content_navigation"] );
+						*echo '</pre>';
+						*/
+						?>
 			  		</div>
 				</div>
 			</div>
 		</div>
 	</section>
+	<div class="angle-blue">&nbsp;</div>
 	<footer id="bottom"><?php $this->printTrail(); ?></footer>
 </body>
 </html><?php
 	}
- 
 }
+?>
