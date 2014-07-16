@@ -166,6 +166,7 @@ div#top-navbar.container span#top-navbar-links > a:hover {
 
 #main {
 	position: relative;
+	margin-bottom: 132px;
 }
 
 .container {
@@ -188,7 +189,8 @@ div.contents.body-page {
 }
 
 .nav-dropdown {
-	display: block;
+	/*display: block;*/
+	display: none; /* fixed by our js file */
 	float: left;
 	list-style: none;
 	margin: 0 10px 0 0;
@@ -254,9 +256,14 @@ div.contents.body-page {
 	margin-right: 5px;
 }
 
-.nav-pills > li.active > a, .nav-pills > li > a.active {
+.nav-pills > li.active > a, .nav-pills > li > a.active, {
 	color: #fff;
 	background-color: #e45735;
+}
+
+.nav-pills > li.selected {
+	color: #064661 !important;
+	background-color: #96C5DA;
 }
 
 .nav-pills > li > a {
@@ -267,6 +274,10 @@ div.contents.body-page {
 	font-size: 16px;
 	line-height: 20px;
 }
+
+.nav-pills > li > a.selected {
+	color: #267090;
+} 
 
 .nav-pills > li > a:hover {
 	color: #e45735;
@@ -356,11 +367,10 @@ footer .container .contents {
 	left: 0px;
 	bottom: 3rem;
 	width: 0;
-	background-color: rgb(25,96,158);
-	border-bottom-color: rgba(0, 0, 0, 0);
+	border-bottom-color: rgb(25,96,158);
 	border-bottom-style: solid;
 	border-bottom-width: 125px;
-	border-right-color: rgb(255,255,255);
+	border-right-color: rgba(0, 0, 0, 0);
 	border-right-style: solid;
 	border-right-width: 2000px;
 	border-top-color: rgba(0, 0, 0, 0);

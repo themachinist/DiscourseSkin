@@ -104,12 +104,15 @@ class DiscourseSkinTemplate extends BaseTemplate {
 							/**
 							 * 	If the a user is signed in display user controls
 							 */ 
-							if ($this->isUserLoggedIn()) { ?>
+							if ($this->isUserLoggedIn()) { 
+				  			echo <<<HTML
 				  			<ul class="icons clearfix" role="navigation">
 				  			<li class="notifications">
-								<a class="icon" href="#" data-notifications="notifications-dropdown" id="user-notifications" title="notifications of @name mentions, replies to your posts and topics, private messages, etc">
+								<a class="icon" href="" id="user-notifications" title="notifications of @name mentions, replies to your posts and topics, private messages, etc">
 									<i class="fa fa-comment"></i><span class="sr-only">notifications of @name mentions, replies to your posts and topics, private messages, etc</span>
 								</a>
+								<?php /* if ( $this->html( 'newtalk' ) ) */ ?>
+								<div><!-- notification icon: small red box with a number in a nice font --></div>
 							</li>
 							<li>
 								<a id="search-button" class="icon expand" href="#" title="search for topics, posts, users, or categories">
@@ -122,27 +125,45 @@ class DiscourseSkinTemplate extends BaseTemplate {
 								</a>
 							</li>
 							<li class="current-user dropdown">
-								<a class="icon" href="#" title="Avatar" id="current-user">
+								<a class="icon" href="#" title="User" id="current-user">
 									<i class="fa fa-user"></i><span class="sr-only">go to another topic list or category</span>
 								</a>
 							</li>
 							</ul>
 							<div id="search-dropdown" class="d-dropdown" style="display: none;">
-								<input id="search-term" class="ember-text-field" placeholder="type your search terms here" type="text"><?php echo $this->makeSearchButton( 'fulltext', array( 'id' => 'mw-searchButton', 'class' => 'searchButton' ) ); ?>
+								<input id="search-term" class="ember-text-field" placeholder="type your search terms here" type="text">
 							</div>
-							<section class="d-dropdown" id="notifications-dropdown" style="display: none;">
-								<div class="none">You have no notifications right now.</div>
+							<section class="d-dropdown" id="site-map-dropdown" style="display: block;">
+								<ul class="location-links">
+									<li><a href="/admin" class="admin-link"><i class="fa fa-wrench"></i>Admin</a></li>
+									<li><a href="/admin/flags/active" class="flagged-posts-link"><i class="fa fa-flag"></i>Flags</a></li>
+									<li><a id="ember4687" class="ember-view latest-topics-link" href="/" title="topics with recent posts">Latest</a></li>
+									<li><a href="/faq" class="faq-link">FAQ</a></li>
+									<li><a href="#" class="mobile-toggle-link" data-ember-action="1229">Mobile View</a></li>
+								</ul>
+								<ul class="category-links">
+									<li class="heading" title="all topics grouped by category"><a id="ember4691" class="ember-view" href="/categories">Categories</a></li>
+									<li class="category"><a href="/category/meta" data-drop-close="true" class="badge-category" title="Discussion about this forum, its organization, how it works, and how we can improve it." style="background-color: #808281; color: #FFFFFF; ">meta</a></li>
+									<li class="category"><a href="/category/staff" data-drop-close="true" class="badge-category restricted" title="Private category for staff discussions. Topics are only visible to admins and moderators." style="background-color: #F7941D; color: #FFFFFF; "><div><i class="fa fa-group"></i> staff</div></a></li>
+									<li class="category"><a href="/category/resdev" data-drop-close="true" class="badge-category restricted" style="background-color: #25AAE2; color: #FFFFFF; "><div><i class="fa fa-group"></i> resdev</div></a></li>
+									<li class="category"><a href="/category/the-company" data-drop-close="true" class="badge-category restricted" title="Come here to read or talk about news, current events, or life in general at MASS." style="background-color: #283890; color: #FFFFFF; "><div><i class="fa fa-group"></i> The Company</div></a></li>
+									<li class="category"><a href="/category/uncategorized" data-drop-close="true" class="badge-category" style="background-color: #D3D4D5; color: #FFFFFF; ">uncategorized</a></li>
+									<li class="category"><a href="/category/lounge" data-drop-close="true" class="badge-category restricted" title="A category exclusive to members with trust level 3 and higher." style="background-color: #B3B5B4; color: #652D90; "><div><i class="fa fa-group"></i> lounge</div></a></li>
+									<li class="category"><a href="/category/public" data-drop-close="true" class="badge-category" title="This category could be for public use. " style="background-color: #9EB83B; color: #FFFFFF; ">public</a></li>
+									<li class="category"><a href="/category/epicor" data-drop-close="true" class="badge-category restricted" title="For all of your Epicor questions, comments, concerns and suggestions. Ask anything about using Epicor or use as a shoulder to cry on when Epicor is giving you troubles. " style="background-color: #0E76BD; color: #FFFFFF; "><div><i class="fa fa-group"></i> Epicor</div></a></li>
+								</ul>
 							</section>
 							<section class="d-dropdown" id="user-dropdown" style="display: none;">
 	  							<ul class="user-dropdown-links">
-									<li><a class="user-activity-link" href="/users/winslow">Profile</a></li>
+									<li><a class="user-activity-link" href="{$this->data['personal_urls']['userpage']['href']}">{$this->data['personal_urls']['userpage']['text']}</a></li>
 									<li><a href="/admin/users/winslow">Admin</a></li>
 									<li><a class="user-messages-link" href="/users/winslow/private-messages">Messages</a></li>
-									<li><a href="<?php echo $this->data['personal_urls']['href']; ?>"><?php echo $this->data['personal_urls']['text']; ?></a></li>
-									<li><button class="btn btn-danger right logout"><i class="fa fa-sign-out"></i>Log Out</button></li>
+									<li><a href="{$this->data['personal_urls']['preferences']['href']}">{$this->data['personal_urls']['preferences']['text']}</a></li>
+									<li><a href="{$this->data['personal_urls']['logout']['href']}" class="btn btn-danger right logout"><i class="fa fa-sign-out"></i>{$this->data['personal_urls']['logout']['text']}</button></li>
 								</ul>
 							</section>
-							<?php } 
+HTML;
+							} 
 							/**
 							 * End user controls
 							 */?>
@@ -152,9 +173,15 @@ class DiscourseSkinTemplate extends BaseTemplate {
 			</header>
 			<div id="main-outlet">
 				<div class="container">
-  					<div class="row">
-  						<div class="alert alert-info"></div>
-  					</div>
+					<?php 
+					if ( $this->html( 'sitenotice' ) ) {
+						echo <<<HTML
+	  					<div class="row">
+	  						<div class="alert alert-info">{$this->html( 'sitenotice' )}</div>
+	  					</div>
+ HTML;
+					} 
+					?>
 				</div>
 				<?php
 				/**
@@ -208,11 +235,12 @@ HTML;
 						<?php $this->html( 'catlinks' ); ?>
 						<?php $this->html( 'bodytext' ); ?>
 						<?php
-						/*
-						*echo '<pre>';
-						*var_dump( $this->data["content_navigation"] );
-						*echo '</pre>';
-						*/
+						
+						echo '<pre>';
+						var_dump( $this->data["content_navigation"] );
+						var_dump( $this->data['personal_urls'] );
+						echo '</pre>';
+						
 						?>
 			  		</div>
 				</div>
