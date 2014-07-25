@@ -27,8 +27,6 @@ $wgExtensionCredits['skin'][] = array(
 /**** UNSET THIS LATER ****/
 $wgResourceLoaderDebug = true;
 
-
-
 $wgValidSkinNames['Discourse'] = 'DiscourseSkin';
  
 $wgAutoloadClasses['SkinDiscourseSkin'] = __DIR__ . '/DiscourseSkin.skin.php';
@@ -43,6 +41,7 @@ $wgResourceModules['skins.discourse'] = array(
 		 */ 
 		#'DiscourseSkin/resources/font-awesome-4.1.0/css/font-awesome.min.css' => array( 'media' => 'screen' )
 	),
+	'scripts' => 'DiscourseSkin/resources/discourse.skin.js',
 	'remoteBasePath' => &$GLOBALS['wgStylePath'],
 	'localBasePath' => &$GLOBALS['wgStyleDirectory'],
 );

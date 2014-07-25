@@ -8,6 +8,9 @@
  * @ingroup Skins
  */
 
+if( !defined( 'MEDIAWIKI' ) ) {
+	die( -1 );
+}
 
 /**
  * SkinTemplate class for My Skin skin
@@ -23,13 +26,11 @@ class SkinDiscourseSkin extends SkinTemplate {
 	 * Otherwise you won't need this function and you can safely delete it
 	 *
 	 * @param OutputPage $out
-	 *
+	 */
 	public function initPage( OutputPage $out ) {
 		parent::initPage( $out );
- 
-		$out->addModules( 'skins.myskin.js' );
+ 		$out->addModuleScripts( 'skins.discourse' );
 	}
-	 */
  
 	/**
 	 * Add CSS via ResourceLoader
@@ -39,9 +40,6 @@ class SkinDiscourseSkin extends SkinTemplate {
 	function setupSkinUserCss( OutputPage $out ) {
 		parent::setupSkinUserCss( $out );
 
-		/**
-		 * FontAwesome requires utf-8 character encoding
-		 */
 		$out->addMeta( 'charset', 'utf-8' );
 		$out->addStyle( '//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css', 'screen');
 		$out->addStyle( '//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css', 'screen');
@@ -68,10 +66,38 @@ class DiscourseSkinTemplate extends BaseTemplate {
 		return array_key_exists('userpage', $this->data['personal_urls']);
 	}
 
+	/** 
+	 * This sucks.
+	 *
+	 */
+	public function insertIcons() {
+		$this->data['content_navigation']['namespaces']['main']['icon_class'] = "fa-file-text-o";
+		$this->data['content_navigation']['namespaces']['talk']['icon_class'] = "fa-comments-o";
+		$this->data['content_navigation']['views']['view']['icon_class'] = "fa-book";
+		$this->data['content_navigation']['views']['edit']['icon_class'] = "fa-edit";
+		$this->data['content_navigation']['views']['history']['icon_class'] = "fa-history";
+		$this->data['personal_urls']['userpage']['icon_class'] = "fa-user";
+		$this->data['personal_urls']['mytalk']['icon_class'] = "fa-comments";
+		$this->data['personal_urls']['preferences']['icon_class'] = "fa-cog";
+		$this->data['personal_urls']['watchlist']['icon_class'] = "fa-eye";
+		$this->data['personal_urls']['mycontris']['icon_class'] = "fa-list";
+		$this->data['personal_urls']['logout']['icon_class'] = "fa-sign-out";
+		$this->data['content_navigation']['actions']['delete']['icon_class'] = "fa-times-circle";
+		$this->data['content_navigation']['actions']['move']['icon_class'] = "fa-copy";
+		$this->data['content_navigation']['actions']['watch']['icon_class'] = "fa-eye";
+		if ( isset( $this->data['content_navigation']['actions']['unprotect'] ) ){
+			$this->data['content_navigation']['actions']['unprotect']['icon_class'] = "fa-unlock-alt";
+		}
+		if ( isset( $this->data['content_navigation']['actions']['protect'] ) ){
+			$this->data['content_navigation']['actions']['protect']['icon_class'] = "fa-lock-alt";
+		}
+	}
+
 	/**
 	 * Outputs the entire contents of the page
 	 */
 	public function execute() {
+		$this->insertIcons();
 		$this->html( 'headelement' ); ?>
 	<div class="container" id="top-navbar">
 		<span style="height:20px;" id="top-navbar-links">
@@ -86,7 +112,7 @@ class DiscourseSkinTemplate extends BaseTemplate {
 				<div class="container">
 					<div class="contents clearfix">
 						<div class="title">
-							<a href="/"><img alt="Techstore@MASS Precision" src=<?php echo $this->data['logopath'] ?> class="logo-big" id="site-logo"></a>
+							<a href="/"><img alt="Techstore@MASS Precision" src=<?php echo $this->data['logopath']; ?> class="logo-big" id="site-logo"></a>
 						</div>
 						<div class="panel clearfix">
 							<div class="current-username">
@@ -94,7 +120,7 @@ class DiscourseSkinTemplate extends BaseTemplate {
 								/**
 								 * 	Ouput the User's name or a sign in button
 								 */ 
-								if ($this->isUserLoggedIn()) { ?>
+								if ( $this->isUserLoggedIn() ) { ?>
 								<span class="username"><a href="<?php echo $this->data['personal_urls']['userpage']['text']; ?>"><?php echo $this->data['personal_urls']['userpage']['text']; ?></a></span>
 								<?php } else { ?>
 									<a class="btn btn-primary" href="<?php echo $this->data['personal_urls']['anonlogin']['href']; ?>"><i class="fa fa-user"></i><?php echo $this->data['personal_urls']['anonlogin']['text']; ?></a>
@@ -108,11 +134,9 @@ class DiscourseSkinTemplate extends BaseTemplate {
 				  			echo <<<HTML
 				  			<ul class="icons clearfix" role="navigation">
 				  			<li class="notifications">
-								<a class="icon" href="" id="user-notifications" title="notifications of @name mentions, replies to your posts and topics, private messages, etc">
+								<a id="user-notifications" class="icon" href="" title="notifications of @name mentions, replies to your posts and topics, private messages, etc">
 									<i class="fa fa-comment"></i><span class="sr-only">notifications of @name mentions, replies to your posts and topics, private messages, etc</span>
 								</a>
-								<?php /* if ( $this->html( 'newtalk' ) ) */ ?>
-								<div><!-- notification icon: small red box with a number in a nice font --></div>
 							</li>
 							<li>
 								<a id="search-button" class="icon expand" href="#" title="search for topics, posts, users, or categories">
@@ -120,46 +144,37 @@ class DiscourseSkinTemplate extends BaseTemplate {
 								</a>
 							</li>
 							<li class="categories dropdown">
-								<a class="icon" href="#" title="go to another topic list or category" id="site-map">
+								<a id="sitemap-button" class="icon" href="/Special:AllPages" title="go to another topic list or category">
 									<i class="fa fa-bars"></i><span class="sr-only">go to another topic list or category</span>
 								</a>
 							</li>
-							<li class="current-user dropdown">
-								<a class="icon" href="#" title="User" id="current-user">
-									<i class="fa fa-user"></i><span class="sr-only">go to another topic list or category</span>
+							<li id="user-button" class="current-user dropdown">
+								<a id="user-button" class="icon" href="/User:Winslow" title="User">
+									<i class="fa fa-user"></i><span class="sr-only">user controls</span>
 								</a>
 							</li>
 							</ul>
-							<div id="search-dropdown" class="d-dropdown" style="display: none;">
-								<input id="search-term" class="ember-text-field" placeholder="type your search terms here" type="text">
+							<div id="search-dropdown" class="d-dropdown hide">
+								<input id="search-term" placeholder="type your search terms here" type="text">
 							</div>
-							<section class="d-dropdown" id="site-map-dropdown" style="display: block;">
+							<section id="site-map-dropdown" class="d-dropdown hide">
 								<ul class="location-links">
-									<li><a href="/admin" class="admin-link"><i class="fa fa-wrench"></i>Admin</a></li>
+									<li><a href="/Special:AllPages" class="admin-link"><i class="fa fa-wrench"></i>Special Pages</a></li>
 									<li><a href="/admin/flags/active" class="flagged-posts-link"><i class="fa fa-flag"></i>Flags</a></li>
-									<li><a id="ember4687" class="ember-view latest-topics-link" href="/" title="topics with recent posts">Latest</a></li>
+									<li><a href="/" class="latest-topics-link" title="topics with recent posts">Latest</a></li>
 									<li><a href="/faq" class="faq-link">FAQ</a></li>
-									<li><a href="#" class="mobile-toggle-link" data-ember-action="1229">Mobile View</a></li>
-								</ul>
-								<ul class="category-links">
-									<li class="heading" title="all topics grouped by category"><a id="ember4691" class="ember-view" href="/categories">Categories</a></li>
-									<li class="category"><a href="/category/meta" data-drop-close="true" class="badge-category" title="Discussion about this forum, its organization, how it works, and how we can improve it." style="background-color: #808281; color: #FFFFFF; ">meta</a></li>
-									<li class="category"><a href="/category/staff" data-drop-close="true" class="badge-category restricted" title="Private category for staff discussions. Topics are only visible to admins and moderators." style="background-color: #F7941D; color: #FFFFFF; "><div><i class="fa fa-group"></i> staff</div></a></li>
-									<li class="category"><a href="/category/resdev" data-drop-close="true" class="badge-category restricted" style="background-color: #25AAE2; color: #FFFFFF; "><div><i class="fa fa-group"></i> resdev</div></a></li>
-									<li class="category"><a href="/category/the-company" data-drop-close="true" class="badge-category restricted" title="Come here to read or talk about news, current events, or life in general at MASS." style="background-color: #283890; color: #FFFFFF; "><div><i class="fa fa-group"></i> The Company</div></a></li>
-									<li class="category"><a href="/category/uncategorized" data-drop-close="true" class="badge-category" style="background-color: #D3D4D5; color: #FFFFFF; ">uncategorized</a></li>
-									<li class="category"><a href="/category/lounge" data-drop-close="true" class="badge-category restricted" title="A category exclusive to members with trust level 3 and higher." style="background-color: #B3B5B4; color: #652D90; "><div><i class="fa fa-group"></i> lounge</div></a></li>
-									<li class="category"><a href="/category/public" data-drop-close="true" class="badge-category" title="This category could be for public use. " style="background-color: #9EB83B; color: #FFFFFF; ">public</a></li>
-									<li class="category"><a href="/category/epicor" data-drop-close="true" class="badge-category restricted" title="For all of your Epicor questions, comments, concerns and suggestions. Ask anything about using Epicor or use as a shoulder to cry on when Epicor is giving you troubles. " style="background-color: #0E76BD; color: #FFFFFF; "><div><i class="fa fa-group"></i> Epicor</div></a></li>
-								</ul>
+									<li><a href="#" class="mobile-toggle-link">Mobile View</a></li>
+								</ul>	
 							</section>
-							<section class="d-dropdown" id="user-dropdown" style="display: none;">
+							<section id="user-dropdown" class="d-dropdown hide">
 	  							<ul class="user-dropdown-links">
-									<li><a class="user-activity-link" href="{$this->data['personal_urls']['userpage']['href']}">{$this->data['personal_urls']['userpage']['text']}</a></li>
-									<li><a href="/admin/users/winslow">Admin</a></li>
-									<li><a class="user-messages-link" href="/users/winslow/private-messages">Messages</a></li>
-									<li><a href="{$this->data['personal_urls']['preferences']['href']}">{$this->data['personal_urls']['preferences']['text']}</a></li>
-									<li><a href="{$this->data['personal_urls']['logout']['href']}" class="btn btn-danger right logout"><i class="fa fa-sign-out"></i>{$this->data['personal_urls']['logout']['text']}</button></li>
+HTML;
+	  							foreach ( $this->data['personal_urls'] as $personal_urls) {
+	  								echo <<<HTML
+	  								<li><a href="{$personal_urls['href']}"><i class="fa {$personal_urls['icon_class']}"></i>{$personal_urls['text']}</a></li>
+HTML;
+	  							}
+	  							echo <<<HTML
 								</ul>
 							</section>
 HTML;
@@ -179,8 +194,8 @@ HTML;
 	  					<div class="row">
 	  						<div class="alert alert-info">{$this->html( 'sitenotice' )}</div>
 	  					</div>
- HTML;
-					} 
+HTML;
+					}
 					?>
 				</div>
 				<?php
@@ -213,17 +228,13 @@ HTML;
 								foreach ( $value as $views ){
 									echo <<<HTML
 									<li class="{$views['class']}" title="{$views['text']}">
-										<a href="{$views['href']}">{$views['text']}</a>
+										<a href="{$views['href']}"><i class="fa {$views['icon_class']}"></i>{$views['text']}</a>
 									</li>
 HTML;
 								}
 								echo '</ul>';
 							}
 							?>
-							<!--
-							<li title="View this article." class="active" >
-								<a href="/latest">View</a>
-							</li>-->
 						</ul>
 					</div>
 				</div>
@@ -233,15 +244,9 @@ HTML;
 				<div class="container">
 					<div class="contents clearfix body-page">
 						<?php $this->html( 'catlinks' ); ?>
+						<h1 id="firstHeading" class="firstHeading"><?php $this->html( 'title' ) ?></h1>
 						<?php $this->html( 'bodytext' ); ?>
-						<?php
-						
-						echo '<pre>';
-						var_dump( $this->data["content_navigation"] );
-						var_dump( $this->data['personal_urls'] );
-						echo '</pre>';
-						
-						?>
+						<?php echo var_dump($this->data['personal_urls']['logout']); ?>
 			  		</div>
 				</div>
 			</div>
