@@ -46,8 +46,6 @@ function Menu() {
 						// show dropdown
 						items[cmp].dropdown.show();
 					}
-				} else {
-					return false;
 				}
 			}
 		});

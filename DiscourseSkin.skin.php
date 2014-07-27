@@ -66,31 +66,33 @@ class DiscourseSkinTemplate extends BaseTemplate {
 		return array_key_exists('userpage', $this->data['personal_urls']);
 	}
 
+	public function addKeyToArrayIfExist( &$arr, $key, $val ){
+		if ( isset( $arr ) ){
+			$arr[$key] = $val;
+		}
+	}
+
 	/** 
 	 * This sucks.
 	 *
 	 */
 	public function insertIcons() {
-		$this->data['content_navigation']['namespaces']['main']['icon_class'] = "fa-file-text-o";
-		$this->data['content_navigation']['namespaces']['talk']['icon_class'] = "fa-comments-o";
-		$this->data['content_navigation']['views']['view']['icon_class'] = "fa-book";
-		$this->data['content_navigation']['views']['edit']['icon_class'] = "fa-edit";
-		$this->data['content_navigation']['views']['history']['icon_class'] = "fa-history";
-		$this->data['personal_urls']['userpage']['icon_class'] = "fa-user";
-		$this->data['personal_urls']['mytalk']['icon_class'] = "fa-comments";
-		$this->data['personal_urls']['preferences']['icon_class'] = "fa-cog";
-		$this->data['personal_urls']['watchlist']['icon_class'] = "fa-eye";
-		$this->data['personal_urls']['mycontris']['icon_class'] = "fa-list";
-		$this->data['personal_urls']['logout']['icon_class'] = "fa-sign-out";
-		$this->data['content_navigation']['actions']['delete']['icon_class'] = "fa-times-circle";
-		$this->data['content_navigation']['actions']['move']['icon_class'] = "fa-copy";
-		$this->data['content_navigation']['actions']['watch']['icon_class'] = "fa-eye";
-		if ( isset( $this->data['content_navigation']['actions']['unprotect'] ) ){
-			$this->data['content_navigation']['actions']['unprotect']['icon_class'] = "fa-unlock-alt";
-		}
-		if ( isset( $this->data['content_navigation']['actions']['protect'] ) ){
-			$this->data['content_navigation']['actions']['protect']['icon_class'] = "fa-lock-alt";
-		}
+		$this->addKeyToArrayIfExist( $this->data['content_navigation']['namespaces']['main'], 'icon_class', "fa-file-text-o" );
+		$this->addKeyToArrayIfExist( $this->data['content_navigation']['namespaces']['talk'], 'icon_class', "fa-comments-o" );
+		$this->addKeyToArrayIfExist( $this->data['content_navigation']['views']['view'], 'icon_class', "fa-book" );
+		$this->addKeyToArrayIfExist( $this->data['content_navigation']['views']['edit'], 'icon_class', "fa-edit" );
+		$this->addKeyToArrayIfExist( $this->data['content_navigation']['views']['history'], 'icon_class', "fa-history" );
+		$this->addKeyToArrayIfExist( $this->data['personal_urls']['userpage'], 'icon_class', "fa-user" );
+		$this->addKeyToArrayIfExist( $this->data['personal_urls']['mytalk'], 'icon_class', "fa-comments" );
+		$this->addKeyToArrayIfExist( $this->data['personal_urls']['preferences'], 'icon_class', "fa-cog" );
+		$this->addKeyToArrayIfExist( $this->data['personal_urls']['watchlist'], 'icon_class', "fa-eye" );
+		$this->addKeyToArrayIfExist( $this->data['personal_urls']['mycontris'], 'icon_class', "fa-list" );
+		$this->addKeyToArrayIfExist( $this->data['personal_urls']['logout'], 'icon_class', "fa-sign-out" );
+		$this->addKeyToArrayIfExist( $this->data['content_navigation']['actions']['delete'], 'icon_class', "fa-times-circle" );
+		$this->addKeyToArrayIfExist( $this->data['content_navigation']['actions']['move'], 'icon_class', "fa-copy" );
+		$this->addKeyToArrayIfExist( $this->data['content_navigation']['actions']['watch'], 'icon_class', "fa-eye" );
+		$this->addKeyToArrayIfExist( $this->data['content_navigation']['actions']['unprotect'], 'icon_class', "fa-unlock-alt" );
+		$this->addKeyToArrayIfExist( $this->data['content_navigation']['actions']['protect'], 'icon_class', "fa-lock-alt" );
 	}
 
 	/**
@@ -154,9 +156,13 @@ class DiscourseSkinTemplate extends BaseTemplate {
 								</a>
 							</li>
 							</ul>
-							<div id="search-dropdown" class="d-dropdown hide">
-								<input id="search-term" placeholder="type your search terms here" type="text">
-							</div>
+							<section id="search-dropdown" class="d-dropdown hide">
+								<form action="{$this->data['wgScript']}" id="searchform">
+									{$this->makeSearchInput( array( "id" => "searchInput" ) )}
+									{$this->makeSearchButton( 'fulltext', array( 'id' => 'mw-searchButton', 'class' => 'searchButton', 'placeholder' => 'ask a question here!' ) )}
+									<input type="hidden" name="title" value="Special:Search">
+								</form>
+							</section>
 							<section id="site-map-dropdown" class="d-dropdown hide">
 								<ul class="location-links">
 									<li><a href="/Special:AllPages" class="admin-link"><i class="fa fa-wrench"></i>Special Pages</a></li>
@@ -170,9 +176,11 @@ class DiscourseSkinTemplate extends BaseTemplate {
 	  							<ul class="user-dropdown-links">
 HTML;
 	  							foreach ( $this->data['personal_urls'] as $personal_urls) {
-	  								echo <<<HTML
-	  								<li><a href="{$personal_urls['href']}"><i class="fa {$personal_urls['icon_class']}"></i>{$personal_urls['text']}</a></li>
+	  								if ( !is_null( $personal_urls ) ){
+		  								echo <<<HTML
+		  								<li><a href="{$personal_urls['href']}"><i class="fa {$personal_urls['icon_class']}"></i>{$personal_urls['text']}</a></li>
 HTML;
+									}
 	  							}
 	  							echo <<<HTML
 								</ul>
@@ -226,11 +234,13 @@ HTML;
 								}
 								echo '<ul class="nav nav-pills" id="navigation-bar">';
 								foreach ( $value as $views ){
-									echo <<<HTML
-									<li class="{$views['class']}" title="{$views['text']}">
-										<a href="{$views['href']}"><i class="fa {$views['icon_class']}"></i>{$views['text']}</a>
-									</li>
+									if ( !is_null($views) ){
+										echo <<<HTML
+										<li class="{$views['class']}" title="{$views['text']}">
+											<a href="{$views['href']}"><i class="fa {$views['icon_class']}"></i>{$views['text']}</a>
+										</li>
 HTML;
+									}
 								}
 								echo '</ul>';
 							}
@@ -246,14 +256,14 @@ HTML;
 						<?php $this->html( 'catlinks' ); ?>
 						<h1 id="firstHeading" class="firstHeading"><?php $this->html( 'title' ) ?></h1>
 						<?php $this->html( 'bodytext' ); ?>
-						<?php echo var_dump($this->data['personal_urls']['logout']); ?>
 			  		</div>
 				</div>
 			</div>
 		</div>
 	</section>
-	<div class="angle-blue">&nbsp;</div>
-	<footer id="bottom"><?php $this->printTrail(); ?></footer>
+	<div class="angle-blue hide">&nbsp;</div>
+	<footer id="bottom"></footer>
+	<?php $this->printTrail(); ?>
 </body>
 </html><?php
 	}
