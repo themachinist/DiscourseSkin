@@ -38,9 +38,7 @@ function Menu() {
 					// hide everything anyway
 					items[cmp].control.removeClass('active');
 					items[cmp].dropdown.hide();
-					// wondering if there is a way to find the element on top of the pile our control element is in.
-					// .closest should work but its probably more expensive  - not that it matters much - but this method
-					// works with our markup
+					// considering changing this to use jquery.closest()
 					if (items.hasOwnProperty(cmp) && items[cmp].control[0] == target.context.parentElement) {
 						items[cmp].control.addClass('active');
 						// show dropdown
