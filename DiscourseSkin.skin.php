@@ -116,8 +116,8 @@ class DiscourseSkinTemplate extends BaseTemplate {
 	 * Outputs the entire contents of the page
 	 */
 	public function execute() {
-		$this->insertIcons();
 		$this->fixNavUrls();
+		$this->insertIcons();
 		$this->html( 'headelement' ); ?>
 	<div class="container" id="top-navbar">
 		<span style="height:20px;" id="top-navbar-links">
