@@ -278,13 +278,6 @@ HTML;
 						<?php $this->html( 'catlinks' ); ?>
 						<h1 id="firstHeading" class="firstHeading"><?php $this->html( 'title' ) ?></h1>
 						<?php $this->html( 'bodytext' ); ?>
-						<?php 
-						echo '<pre>';
-						var_dump($this->data['sidebar']);
-						var_dump($this->data['nav_urls']);
-
-						echo '</pre>';
-						?>
 			  		</div>
 				</div>
 			</div>
