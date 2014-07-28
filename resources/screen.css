@@ -37,6 +37,10 @@ a:visited {
 	color: #08c;
 }
 
+a:visited:hover {
+	color: #68ccf2;
+}
+
 ul, ol, dd {
 	margin: 0 0 9px 25px;
 	padding: 0;

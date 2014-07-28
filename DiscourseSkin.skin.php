@@ -93,6 +93,23 @@ class DiscourseSkinTemplate extends BaseTemplate {
 		$this->addKeyToArrayIfExist( $this->data['content_navigation']['actions']['watch'], 'icon_class', "fa-eye" );
 		$this->addKeyToArrayIfExist( $this->data['content_navigation']['actions']['unprotect'], 'icon_class', "fa-unlock-alt" );
 		$this->addKeyToArrayIfExist( $this->data['content_navigation']['actions']['protect'], 'icon_class', "fa-lock-alt" );
+		$this->addKeyToArrayIfExist( $this->data['nav_urls']['mainpage'], 'icon_class', '');
+		$this->addKeyToArrayIfExist( $this->data['nav_urls']['upload'], 'icon_class', 'fa-upload');
+		$this->addKeyToArrayIfExist( $this->data['nav_urls']['specialpages'], 'icon_class', 'fa-sitemap');
+		$this->addKeyToArrayIfExist( $this->data['nav_urls']['print'], 'icon_class', 'fa-print');
+		$this->addKeyToArrayIfExist( $this->data['nav_urls']['permalink'], 'icon_class', 'fa-link');
+		$this->addKeyToArrayIfExist( $this->data['nav_urls']['whatlinkshere'], 'icon_class', 'fa-external-link');
+		$this->addKeyToArrayIfExist( $this->data['nav_urls']['recentchanges'], 'icon_class', 'fa-exchange');
+		$this->addKeyToArrayIfExist( $this->data['nav_urls']['recentchangeslinked'], 'icon_class', 'fa-code-fork');
+	}
+
+	public function fixNavUrls() {
+		$this->data['nav_urls']['mainpage']['text'] = "Main Page";
+		$this->data['nav_urls']['upload']['text'] = "Upload a File";
+		$this->data['nav_urls']['specialpages']['text'] = "Special Pages";
+		$this->data['nav_urls']['whatlinkshere']['text'] = "What links here?";
+		$this->data['nav_urls']['recentchanges'] = $this->data['sidebar']['navigation'][1];
+		$this->data['nav_urls']['recentchangeslinked']['text'] = "Recent Changes (Linked)";
 	}
 
 	/**
@@ -100,6 +117,7 @@ class DiscourseSkinTemplate extends BaseTemplate {
 	 */
 	public function execute() {
 		$this->insertIcons();
+		$this->fixNavUrls();
 		$this->html( 'headelement' ); ?>
 	<div class="container" id="top-navbar">
 		<span style="height:20px;" id="top-navbar-links">
@@ -146,7 +164,7 @@ class DiscourseSkinTemplate extends BaseTemplate {
 								</a>
 							</li>
 							<li class="categories dropdown">
-								<a id="sitemap-button" class="icon" href="/Special:AllPages" title="go to another topic list or category">
+								<a id="sitemap-button" class="icon" href="/w/Special:SpecialPages" title="go to another topic list or category">
 									<i class="fa fa-bars"></i><span class="sr-only">go to another topic list or category</span>
 								</a>
 							</li>
@@ -165,11 +183,15 @@ class DiscourseSkinTemplate extends BaseTemplate {
 							</section>
 							<section id="site-map-dropdown" class="d-dropdown hide">
 								<ul class="location-links">
-									<li><a href="/Special:AllPages" class="admin-link"><i class="fa fa-wrench"></i>Special Pages</a></li>
-									<li><a href="/admin/flags/active" class="flagged-posts-link"><i class="fa fa-flag"></i>Flags</a></li>
-									<li><a href="/" class="latest-topics-link" title="topics with recent posts">Latest</a></li>
-									<li><a href="/faq" class="faq-link">FAQ</a></li>
-									<li><a href="#" class="mobile-toggle-link">Mobile View</a></li>
+HTML;
+	  							foreach ( $this->data['nav_urls'] as $nav_urls) {
+	  								if ( !is_null( $nav_urls ) && $nav_urls ){
+		  								echo <<<HTML
+		  								<li><a href="{$nav_urls['href']}"><i class="fa {$nav_urls['icon_class']}"></i>{$nav_urls['text']}</a></li>
+HTML;
+									}
+	  							}
+	  							echo <<<HTML
 								</ul>	
 							</section>
 							<section id="user-dropdown" class="d-dropdown hide">
@@ -256,6 +278,13 @@ HTML;
 						<?php $this->html( 'catlinks' ); ?>
 						<h1 id="firstHeading" class="firstHeading"><?php $this->html( 'title' ) ?></h1>
 						<?php $this->html( 'bodytext' ); ?>
+						<?php 
+						echo '<pre>';
+						var_dump($this->data['sidebar']);
+						var_dump($this->data['nav_urls']);
+
+						echo '</pre>';
+						?>
 			  		</div>
 				</div>
 			</div>
