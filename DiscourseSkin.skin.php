@@ -61,7 +61,11 @@ class DiscourseSkinTemplate extends BaseTemplate {
  	 * to dig through MediaWiki's enourmous documentation and codebase
  	 */
  	public function isUserLoggedIn() {
-		return array_key_exists('username', $this->data);
+		if ( array_key_exists('username', $this->data) == 1 ) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function addKeyToArrayIfExist( &$arr, $key, $val ){
