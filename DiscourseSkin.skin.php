@@ -2,8 +2,6 @@
 /**
  * Skin file for skin Discourse Skin.
  *
- * I am seriously considering using Smarty for this.
- *
  * @file
  * @ingroup Skins
  */
@@ -13,7 +11,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 }
 
 /**
- * SkinTemplate class for My Skin skin
+ * SkinTemplate class for DiscourseSkin
  * @ingroup Skins
  */
 class SkinDiscourseSkin extends SkinTemplate {
@@ -132,7 +130,7 @@ class DiscourseSkinTemplate extends BaseTemplate {
 				<div class="container">
 					<div class="contents clearfix">
 						<div class="title">
-							<a href="/"><img alt="Techstore@MASS Precision" src=<?php echo $this->data['logopath']; ?> class="logo-big" id="site-logo"></a>
+							<a href="/wiki"><img alt="Techstore@MASS Precision" src=<?php echo $this->data['logopath']; ?> class="logo-big" id="site-logo"></a>
 						</div>
 						<div class="panel clearfix">
 							<div class="current-username">
