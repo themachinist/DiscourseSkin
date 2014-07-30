@@ -145,7 +145,7 @@ class DiscourseSkinTemplate extends BaseTemplate {
 								if ( $this->isUserLoggedIn() ) { ?>
 								<span class="username"><a href="<?php echo $this->data['personal_urls']['userpage']['url']; ?>"><?php echo $this->data['personal_urls']['userpage']['text']; ?></a></span>
 								<?php } else { ?>
-									<a class="btn btn-primary" href="<?php echo $this->data['personal_urls']['anonlogin']['href']; ?>"><i class="fa fa-user"></i><?php echo $this->data['personal_urls']['anonlogin']['text']; ?></a>
+									<a class="btn btn-primary" href="<?php echo $this->data['personal_urls']['login']['href']; ?>"><i class="fa fa-user"></i><?php echo $this->data['personal_urls']['login']['text']; ?></a>
 								<?php } ?>
 				  			</div>
 				  			<?php	
