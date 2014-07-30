@@ -120,6 +120,9 @@ class DiscourseSkinTemplate extends BaseTemplate {
 	public function execute() {
 		$this->fixNavUrls();
 		$this->insertIcons();
+		if (array_key_exists('anonlogin', $this->data['personal_urls'])){
+			$this->data['personal_urls']['login'] = $this->data['personal_urls']['anonlogin'];
+		}
 		$this->html( 'headelement' ); ?>
 	<div class="container" id="top-navbar">
 		<span style="height:20px;" id="top-navbar-links">
