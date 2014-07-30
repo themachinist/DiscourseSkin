@@ -63,7 +63,7 @@ class DiscourseSkinTemplate extends BaseTemplate {
  	 * to dig through MediaWiki's enourmous documentation and codebase
  	 */
  	public function isUserLoggedIn() {
-		return array_key_exists('userpage', $this->data['personal_urls']);
+		return array_key_exists('username', $this->data);
 	}
 
 	public function addKeyToArrayIfExist( &$arr, $key, $val ){
@@ -141,7 +141,7 @@ class DiscourseSkinTemplate extends BaseTemplate {
 								 * 	Ouput the User's name or a sign in button
 								 */ 
 								if ( $this->isUserLoggedIn() ) { ?>
-								<span class="username"><a href="<?php echo $this->data['personal_urls']['userpage']['text']; ?>"><?php echo $this->data['personal_urls']['userpage']['text']; ?></a></span>
+								<span class="username"><a href="<?php echo $this->data['personal_urls']['userpage']['url']; ?>"><?php echo $this->data['personal_urls']['userpage']['text']; ?></a></span>
 								<?php } else { ?>
 									<a class="btn btn-primary" href="<?php echo $this->data['personal_urls']['anonlogin']['href']; ?>"><i class="fa fa-user"></i><?php echo $this->data['personal_urls']['anonlogin']['text']; ?></a>
 								<?php } ?>
@@ -155,17 +155,17 @@ class DiscourseSkinTemplate extends BaseTemplate {
 				  			<ul class="icons clearfix" role="navigation">
 				  			<li class="notifications">
 								<a id="user-notifications" class="icon" href="" title="notifications of @name mentions, replies to your posts and topics, private messages, etc">
-									<i class="fa fa-comment"></i><span class="sr-only">notifications of @name mentions, replies to your posts and topics, private messages, etc</span>
+									<i class="fa fa-comment"></i><span class="sr-only">notifications</span>
 								</a>
 							</li>
 							<li>
 								<a id="search-button" class="icon expand" href="#" title="search for topics, posts, users, or categories">
-									<i class="fa fa-search"></i><span class="sr-only">search for topics, posts, users, or categories</span>
+									<i class="fa fa-search"></i><span class="sr-only">search this wiki</span>
 								</a>
 							</li>
 							<li class="categories dropdown">
 								<a id="sitemap-button" class="icon" href="/w/Special:SpecialPages" title="go to another topic list or category">
-									<i class="fa fa-bars"></i><span class="sr-only">go to another topic list or category</span>
+									<i class="fa fa-bars"></i><span class="sr-only">navigation menu</span>
 								</a>
 							</li>
 							<li id="user-button" class="current-user dropdown">
@@ -185,7 +185,7 @@ class DiscourseSkinTemplate extends BaseTemplate {
 								<ul class="location-links">
 HTML;
 	  							foreach ( $this->data['nav_urls'] as $nav_urls) {
-	  								if ( !is_null( $nav_urls ) && $nav_urls ){
+	  								if ( !is_null( $nav_urls ) && !empty($nav_urls['href']) ){
 		  								echo <<<HTML
 		  								<li><a href="{$nav_urls['href']}"><i class="fa {$nav_urls['icon_class']}"></i>{$nav_urls['text']}</a></li>
 HTML;
