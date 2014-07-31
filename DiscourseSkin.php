@@ -34,7 +34,11 @@ $wgMessagesDirs['DiscourseSkin'] = __DIR__ . '/i18n';
 
 $wgResourceModules['skins.discourse'] = array(
 	'styles' => array(
-		'DiscourseSkin/resources/screen.css' => array( 'media' => 'screen' ),
+		/**
+		 * ResourceLoader broke this as well by wrapping the whole thing inside
+		 * a media query for no reason.. added via $out->addStyle
+		 * */
+		#'DiscourseSkin/resources/screen.css' => array( 'media' => 'screen' ),
 		/**
 		 * ResourceLoader breaks the links to the fonts in MediaWiki 1.18
 		 * so I used $out->addStyle() in the SkinDiscourseSkin class
