@@ -494,19 +494,17 @@ body.mw-special-Contributions #mw-content-text ul li, #mw-content-text ul li {
 	display: none;
 }
 
-@media screen {
-	#main-outlet div.printfooter {
-		display: none;
-	}
+#main-outlet div.printfooter {
+	display: none;
 }
 
-@media screen and (min-width: 699px) and (max-width: 1130px) {
+@media all and (min-width: 699px) and (max-width: 1110px) {
 	.container, .full-width {
 		margin: 0 3em;
 	}	
 }
 
-@media screen and (max-width: 699px) {
+@media all and (max-width: 699px) {
 	.container, .full-width {
 		width: 950px;
 		margin: 0 1.5em;
