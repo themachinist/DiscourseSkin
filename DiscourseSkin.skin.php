@@ -39,6 +39,7 @@ class SkinDiscourseSkin extends SkinTemplate {
 		parent::setupSkinUserCss( $out );
 
 		$out->addMeta( 'charset', 'utf-8' );
+		$out->addStyle( 'DiscourseSkin/resources/screen.css', 'screen' );
 		$out->addStyle( '//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css', 'screen');
 		$out->addStyle( '//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css', 'screen');
 		$out->addModuleStyles( array(
