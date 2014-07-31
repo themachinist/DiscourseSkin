@@ -498,15 +498,15 @@ body.mw-special-Contributions #mw-content-text ul li, #mw-content-text ul li {
 	display: none;
 }
 
-@media all and (min-width: 699px) and (max-width: 1130px) {
+@media all and (min-width: 699px) and (max-width: 1190px) {
 	.container, .full-width {
-		margin: 0 3em;
+		margin: 0 30px;
 	}	
 }
 
 @media all and (max-width: 699px) {
 	.container, .full-width {
 		/*width: 950px;*/
-		margin: 0 1.5em;
+		margin: 0 20px;
 	}
 }
