@@ -458,7 +458,7 @@ footer .container .contents {
 }
 
 #mw-subcategories, 
-body[class*=" mw-special-"] #mw-content-text ul, 
+body[class*=" mw-special-"] #mw-content-text > ul, 
 .mw-allpages-table-chunk,
 div#userloginForm table {
 	padding: 10px;
@@ -467,7 +467,8 @@ div#userloginForm table {
 	border-top: 10px solid #4386AD;
 }
 
-.mw-allpages-table-chunk, body.mw-special-Contributions #mw-content-text ul {
+.mw-allpages-table-chunk, 
+body[class*=" mw-special-"] #mw-content-text > ul {
 	background-color: #EDF4F8;
 	/* border: 1px solid #95BED6; */
 	margin: 12px;
