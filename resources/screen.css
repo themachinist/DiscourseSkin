@@ -514,7 +514,7 @@ div#catlinks {
 	border: 1px solid silver;
 }
 
-div#catlinks a {
+div#catlinks > a {
 	padding-left: 0.5em;
 }
 
@@ -524,11 +524,11 @@ div#mw-normal-catlinks {
 
 div#catlinks ul li {
 	margin: 1.5px;
-	padding: 0.5em;
+	padding: 3px;
 }
 
 div#catlinks ul li a {
-	padding: 3px;
+	padding: 0.5em;
 }
 
 .hide {
