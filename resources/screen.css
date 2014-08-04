@@ -461,7 +461,8 @@ footer .container .contents {
 body[class*=" mw-special-"] #mw-content-text > ul, 
 #pagehistory, 
 .mw-allpages-table-chunk,
-div#userloginForm table {
+div#userloginForm table,
+table#toc {
 	padding: 10px;
 	padding-top: 0;
 	border-top: 1px solid #4386AD;
@@ -471,7 +472,8 @@ div#userloginForm table {
 .mw-allpages-table-chunk, 
 body[class*=" mw-special-"] #mw-content-text > ul,
 #pagehistory, 
-div#userloginForm table {
+div#userloginForm table,
+table#toc {
 	background-color: #EDF4F8;
 	/* border: 1px solid #95BED6; */
 	margin: 12px;
