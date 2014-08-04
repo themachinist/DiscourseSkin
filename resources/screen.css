@@ -508,6 +508,24 @@ body.mw-special-Contributions #mw-content-text ul li, #mw-content-text ul li {
 	padding: 5px;
 }
 
+div#catlinks {
+	background-color: #f3f3f3;
+	margin-top: 1em;
+	border: 1px solid silver;
+}
+
+div#mw-normal-catlinks {
+	padding-left: 0.25em;
+}
+
+div#catlinks ul li {
+	margin: 1.5px;
+	padding: 0.5em;
+}
+
+div#catlinks ul li a {
+	padding: 3px;
+}
 
 .hide {
 	display: none;
