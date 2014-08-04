@@ -514,6 +514,10 @@ div#catlinks {
 	border: 1px solid silver;
 }
 
+div#catlinks a {
+	padding-left: 0.5em;
+}
+
 div#mw-normal-catlinks {
 	padding-left: 0.25em;
 }
