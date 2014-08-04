@@ -457,7 +457,10 @@ footer .container .contents {
 	background-color: #EDF4F8;
 }
 
-#mw-subcategories, body.mw-special-Contributions #mw-content-text ul, .mw-allpages-table-chunk {
+#mw-subcategories, 
+body[class*=" mw-special-"] #mw-content-text ul, 
+.mw-allpages-table-chunk,
+div#userloginForm table {
 	padding: 10px;
 	padding-top: 0;
 	border-top: 1px solid #4386AD;
