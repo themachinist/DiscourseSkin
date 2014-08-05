@@ -57,9 +57,6 @@ class SkinDiscourseSkin extends SkinTemplate {
 class DiscourseSkinTemplate extends BaseTemplate {
  	/**
  	 * Check if user is logged in.
- 	 *
- 	 * Maybe there is a better way to do this. Maybe it's hard as fuck 
- 	 * to dig through MediaWiki's enourmous documentation and codebase
  	 */
  	public function isUserLoggedIn() {
 		if ( !is_null($this->data['username']) ) {
