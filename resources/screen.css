@@ -497,8 +497,9 @@ body.mw-special-Contributions #mw-content-text ul {
 }
 
 
-#pagehistory li,
-#preftoc li,
+#pagehistory ul li,
+#preftoc ul li,
+#toc ul li,
 {
 	padding: 3px;
 	list-style: none;
