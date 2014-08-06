@@ -499,7 +499,7 @@ body.mw-special-Contributions #mw-content-text ul {
 
 #pagehistory ul li,
 #preftoc ul li,
-#toc ul li,
+#toc li,
 {
 	padding: 3px;
 	list-style: none;
