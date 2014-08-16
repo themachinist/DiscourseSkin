@@ -260,11 +260,19 @@ HTML;
 								echo '<ul class="nav nav-pills" id="navigation-bar">';
 								foreach ( $value as $views ){
 									if ( !is_null($views) ){
-										echo <<<HTML
-										<li class="{$views['class']}" title="{$views['text']}">
-											<a href="{$views['href']}"><i class="fa {$views['icon_class']}"></i>{$views['text']}</a>
-										</li>
+										if($views['text'] != "Unwatch"){
+											echo <<<HTML
+											<li class="{$views['class']}" title="{$views['text']}">
+												<a href="{$views['href']}"><i class="fa {$views['icon_class']}"></i>{$views['text']}</a>
+											</li>
 HTML;
+										} else {
+											echo <<<HTML
+											<li class="{$views['class']}" title="{$views['text']}">
+												<a href="{$views['href']}"><i class="fa"></i>{$views['text']}</a>
+											</li>
+HTML;
+										}
 									}
 								}
 								echo '</ul>';
