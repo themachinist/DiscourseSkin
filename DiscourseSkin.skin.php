@@ -269,7 +269,7 @@ HTML;
 										} else {
 											echo <<<HTML
 											<li class="{$views['class']}" title="{$views['text']}">
-												<a href="{$views['href']}"><i class="fa"></i>{$views['text']}</a>
+												<a href="{$views['href']}"><i class="fa fa-eye"></i>{$views['text']}</a>
 											</li>
 HTML;
 										}
