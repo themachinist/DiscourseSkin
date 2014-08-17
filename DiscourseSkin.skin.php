@@ -91,6 +91,7 @@ class DiscourseSkinTemplate extends BaseTemplate {
 		$this->addKeyToArrayIfExist( $this->data['content_navigation']['actions']['delete'], 'icon_class', "fa-times-circle" );
 		$this->addKeyToArrayIfExist( $this->data['content_navigation']['actions']['move'], 'icon_class', "fa-copy" );
 		$this->addKeyToArrayIfExist( $this->data['content_navigation']['actions']['watch'], 'icon_class', "fa-eye" );
+		$this->addKeyToArrayIfExist( $this->data['content_navigation']['actions']['unwatch'], 'icon_class', "fa-eye" );
 		$this->addKeyToArrayIfExist( $this->data['content_navigation']['actions']['unprotect'], 'icon_class', "fa-unlock-alt" );
 		$this->addKeyToArrayIfExist( $this->data['content_navigation']['actions']['protect'], 'icon_class', "fa-lock-alt" );
 		$this->addKeyToArrayIfExist( $this->data['nav_urls']['mainpage'], 'icon_class', '');
