@@ -20,12 +20,21 @@
 	text-align: center;
 }
 
+#catlinks {
+	display: block;
+	padding-top: 1em;
+}
+
 #firstHeading {
 	font-size: 200%;
 }
 
 #toc {
 	border: 0;
+}
+
+.printfooter {
+	display: none;
 }
 
 table tbody tr td:first-child a img {
@@ -37,17 +46,8 @@ table tbody tr td b > big {
 	padding-left: 1em;
 }
 
-table, tbody, tr, td {
-    position: relative;
-}
-tr { 
-    page-break-inside: avoid !important;
-    page-break-before: auto !important;
-    page-break-after: avoid;
-}
-
-td { 
-    page-break-inside: avoid !important;
-    page-break-after: avoid !important;
-    page-break-before: avoid !important;
+tr, td {
+    page-break-inside: avoid;
+    -webkit-region-break-inside: avoid; 
+    position: relative; 
 }
