@@ -1,0 +1,53 @@
+.d-header #site-logo {
+	max-height: 40px;
+	float: right;
+}
+
+.d-header .panel {
+	display: none;
+}
+
+#top-navbar {
+	display: none;
+}
+
+#main-outlet .list-controls {
+	display: none;
+}
+
+#catlinks, #firstHeading {
+	margin-top: 0;
+	text-align: center;
+}
+
+#firstHeading {
+	font-size: 200%;
+}
+
+#toc {
+	border: 0;
+}
+
+table tbody tr td:first-child a img {
+	width: 100%;
+	height: auto;
+}
+
+table tbody tr td b > big {
+	padding-left: 1em;
+}
+
+table, tbody, tr, td {
+    position: relative;
+}
+tr { 
+    page-break-inside: avoid !important;
+    page-break-before: auto !important;
+    page-break-after: avoid;
+}
+
+td { 
+    page-break-inside: avoid !important;
+    page-break-after: avoid !important;
+    page-break-before: avoid !important;
+}
