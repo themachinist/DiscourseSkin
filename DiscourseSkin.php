@@ -44,6 +44,7 @@ $wgResourceModules['skins.discourse'] = array(
 		 * so I used $out->addStyle() in the SkinDiscourseSkin class
 		 */ 
 		#'DiscourseSkin/resources/font-awesome-4.1.0/css/font-awesome.min.css' => array( 'media' => 'screen' )
+		'DiscourseSkin/resources/print.css' => array( 'media' => 'print' )
 	),
 	'scripts' => 'DiscourseSkin/resources/discourse.skin.js',
 	'remoteBasePath' => &$GLOBALS['wgStylePath'],
