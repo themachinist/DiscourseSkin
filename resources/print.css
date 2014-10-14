@@ -23,6 +23,7 @@
 #catlinks {
 	display: block;
 	padding-top: 1em;
+	clear: both;
 }
 
 #firstHeading {
